@@ -234,7 +234,7 @@ img {
     color: grey;
 }
 
-.rating{
+.rating {
     background-color: var(--secondary-color);
     padding: 5px 10px;
     border-radius: 5px;
@@ -255,17 +255,37 @@ img {
     font-size: 13px;
 }
 
-.search-movie-container{
+
+.search-movie-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 100%;
-}
-.column{
-    flex: 15%;
-    margin: 0 5px;
 }
 
-.disp-none{
+.search-movie-container>div {
+    width: 200px;
+    margin: 6px;
+}
+
+.disp-none {
     display: none;
+}
+
+
+
+.genre-movie-list-inner {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.genre-movie-list-inner>div {
+    width: 200px;
+    margin: 6px;
+}
+
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
 }

@@ -240,6 +240,7 @@ const getGenre = async (url) => {
 getGenre(genre);
 
 
+let genreContainer = [];
 const setGenre = (data) => {
     genreTags.innerHTML = "";
     const t = document.createElement('div');
@@ -248,9 +249,14 @@ const setGenre = (data) => {
     genreTags.append(t);
     data.forEach(genre => {
         const tg = document.createElement("div");
-        tg.id = genre.id;
         tg.classList.add('tag');
+        tg.id = genre.id;
         tg.innerText = genre.name;
+        tg.addEventListener("click", ()=>{
+            genreContainer[0] = genre.id;
+            // console.log(genreContainer);
+            getGenreMovies(API_URL + "&with_genres=" + encodeURI(genreContainer.join(',')))
+        })
         genreTags.append(tg);
     })
 }
@@ -273,7 +279,7 @@ const getSearchMovies = async (url) => {
         catMovies.classList.add('disp-none');
         moviesContainer.classList.remove('disp-none');
         searchMovieCont.innerText = "";
-        moviesContainer.innerHTML = `<h1 style="color:white;"> No Results Found </h1>`
+        moviesContainer.innerHTML = `<h1 style="color:white; text-align:center;"> No Results Found </h1>`
     }
 }
 
@@ -289,6 +295,7 @@ form.addEventListener("submit", (e) => {
 
 const showSearchMovies = (data) => {
     catMovies.classList.add('disp-none');
+    genreMovieList.classList.add('disp-none');
     moviesContainer.classList.remove('disp-none');
     searchMovieCont.innerText = "";
     data.forEach(movie => {
@@ -302,7 +309,7 @@ const showSearchMovies = (data) => {
             newTitle = title;
         }
         const newEl = document.createElement('div');
-        newEl.classList.add('box', 'column');
+        newEl.classList.add('box');
         newEl.innerHTML = `
             
                 <div class="img">
@@ -323,5 +330,58 @@ const showSearchMovies = (data) => {
                 </div>
         `
         searchMovieCont.appendChild(newEl);
+    });
+}
+
+
+
+
+const genreMovieList = document.getElementById("genre-movies-container")
+const genreMovieListInner = document.getElementById("genre-movie-inner-cont")
+
+const getGenreMovies = async (url)=>{
+    let response = await fetch(url);
+    let data = await response.json();
+    showGenreMovies(data.results);
+}
+
+const showGenreMovies = (data) => {
+    catMovies.classList.add('disp-none');
+    moviesContainer.classList.add('disp-none');
+    genreMovieList.classList.remove('disp-none');
+    genreMovieListInner.innerText = "";
+    search.value = "";
+    data.forEach(movie => {
+        const { title, poster_path, vote_average, release_date } = movie;
+        let newTitle = "";
+        if (title.length >= 12) {
+            let titleArr = title.split(" ");
+            newTitle = titleArr.splice(0, 3).join(" ").concat(".....");
+        }
+        else {
+            newTitle = title;
+        }
+        const newEl = document.createElement('div');
+        newEl.classList.add('box');
+        newEl.innerHTML = `
+            
+                <div class="img">
+                    <img src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/200x230"}" alt="${title}">
+                </div>
+                <div class="movie-details">
+                    <div class="movie-name">
+                        <p>${newTitle}</p>
+                    </div>
+                    <div class="release-rating">
+                        <div class="rating">
+                            <p><i class="fa-solid fa-star ${ratingColor(vote_average)}"></i> ${vote_average.toFixed(1)}</p>
+                        </div>
+                        <div class="release-year">
+                            <p>${release_date}</p>
+                        </div>
+                    </div>
+                </div>
+        `
+        genreMovieListInner.appendChild(newEl);
     });
 }
