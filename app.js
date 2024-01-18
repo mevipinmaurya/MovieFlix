@@ -252,7 +252,7 @@ const setGenre = (data) => {
         tg.classList.add('tag');
         tg.id = genre.id;
         tg.innerText = genre.name;
-        tg.addEventListener("click", ()=>{
+        tg.addEventListener("click", () => {
             genreContainer[0] = genre.id;
             // console.log(genreContainer);
             getGenreMovies(API_URL + "&with_genres=" + encodeURI(genreContainer.join(',')))
@@ -277,6 +277,7 @@ const getSearchMovies = async (url) => {
     }
     else {
         catMovies.classList.add('disp-none');
+        genreMovieList.classList.add('disp-none');
         moviesContainer.classList.remove('disp-none');
         searchMovieCont.innerText = "";
         moviesContainer.innerHTML = `<h1 style="color:white; text-align:center;"> No Results Found </h1>`
@@ -339,10 +340,51 @@ const showSearchMovies = (data) => {
 const genreMovieList = document.getElementById("genre-movies-container")
 const genreMovieListInner = document.getElementById("genre-movie-inner-cont")
 
-const getGenreMovies = async (url)=>{
+const prev = document.getElementById('prev');
+const current = document.getElementById('current');
+const next = document.getElementById('next');
+
+let currentPage = 1;
+let nextPage = 2;
+let prevPage = 3;
+let lastUrl = '';
+let totalPages = 100;
+
+const getGenreMovies = async (url) => {
+    lastUrl = url;
     let response = await fetch(url);
     let data = await response.json();
-    showGenreMovies(data.results);
+    if (data.results.length != 0) {
+        showGenreMovies(data.results);
+
+        currentPage = data.page;
+        prevPage = currentPage - 1;
+        nextPage = currentPage + 1;
+        totalPages = data.total_pages;
+        
+        current.innerText = currentPage;
+        if (currentPage <= 1) {
+            prev.classList.add('disabled');
+            next.classList.remove('disabled');
+        }
+        else if (currentPage >= totalPages) {
+            prev.classList.remove('disabled');
+            next.classList.add('disabled');
+        }
+        else {
+            prev.classList.remove('disabled');
+            next.classList.remove('disabled');
+        }
+
+        genreMovieList.scrollIntoView({ behavior: 'smooth' });
+    }
+    else {
+        catMovies.classList.add('disp-none');
+        moviesContainer.classList.add('disp-none');
+        genreMovieList.classList.remove('disp-none');
+        searchMovieCont.innerText = "";
+        genreMovieListInner.innerHTML = `<h1 style="color:white; text-align:center;"> No Results Found </h1>`
+    }
 }
 
 const showGenreMovies = (data) => {
@@ -384,4 +426,33 @@ const showGenreMovies = (data) => {
         `
         genreMovieListInner.appendChild(newEl);
     });
+}
+
+
+prev.addEventListener("click", () => {
+    if (prevPage > 0)
+        pageCall(prevPage);
+})
+
+next.addEventListener("click", () => {
+    if(prevPage <= totalPages)
+        pageCall(nextPage);
+})
+
+function pageCall(page){
+    let urlSplit = lastUrl.split('?');
+    let queryParams = urlSplit[1].split('&');
+    let key = queryParams[queryParams.length - 1].split('=');
+    if (key[0] != 'page') {
+        let url = lastUrl + "&page=" + page;
+        getGenreMovies(url);
+    }
+    else {
+        key[1] = page.toString();
+        let a = key.join('=');
+        queryParams[queryParams.length - 1] = a;
+        let b = queryParams.join('&');
+        let url = urlSplit[0] + `?` + b;
+        getGenreMovies(url);
+    }
 }

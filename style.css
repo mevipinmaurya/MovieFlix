@@ -287,5 +287,30 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.page{
+    background-color: grey;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.font-ico{
+    font-size: 20px;
+    color: red;
+}
+
+.current{
+    font-size: 18px;
+}
+
+.page.disabled{
+    cursor: not-allowed;
 }
