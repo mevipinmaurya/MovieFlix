@@ -25,41 +25,23 @@
 
     <div class="sidebar">
         <div class="scrollbox">
-            <div class="scrollbox-inner">
-                <div class="genre tag">Genre</div>
-                <div class="tag">Action</div>
-                <div class="tag">Comady</div>
-                <div class="tag">Advanture</div>
-                <div class="tag">Thriller</div>
-                <div class="tag">Romance</div>
-                <div class="tag">Mystry</div>
-                <div class="tag">Suspence</div>
-                <div class="tag">War</div>
-                <div class="tag">Advanture</div>
-                <div class="tag">Thriller</div>
-                <div class="tag">Romance</div>
-                <div class="tag">Mystry</div>
-                <div class="tag">Suspence</div>
-                <div class="tag">War</div>
-                <div class="tag">Advanture</div>
-                <div class="tag">Thriller</div>
-                <div class="tag">Romance</div>
-                <div class="tag">Mystry</div>
-                <div class="tag">Suspence</div>
-                <div class="tag">War</div>
+            <div class="scrollbox-inner" id="scrollbox-inner">
+                <!-- <div class="genre tag">Genre</div>
+                <div class="tag">Action</div> -->
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="main-container">
 
-        <!-- Trending Movies -->
-        <div class="movie-category-heading">
-            <h3>Now Trending Movies</h3>
-        </div>
-        <div class="movies-wrapper mb-30" id="trending-movies">
-            <div class="movie-boxes">
-                <!-- <div class="box">
+        <div id="categories-movies">
+            <!-- Trending Movies -->
+            <div class="movie-category-heading">
+                <h3>Now Trending Movies</h3>
+            </div>
+            <div class="movies-wrapper mb-30" id="trending-movies">
+                <div class="movie-boxes">
+                    <!-- <div class="box">
                     <div class="img">
                         <img src="images/movie.jpg" alt="moive">
                     </div>
@@ -72,17 +54,17 @@
                         </div>
                     </div>
                 </div> -->
+                </div>
+
             </div>
 
-        </div>
 
-
-        <!-- Most Populer Movies -->
-        <div class="movie-category-heading">
-            <h3>Most Popular Movies</h3>
-        </div>
-        <div class="movies-wrapper mb-30" id="main-wrapper">
-            <!-- <div class="movie-boxes">
+            <!-- Most Populer Movies -->
+            <div class="movie-category-heading">
+                <h3>Most Popular Movies</h3>
+            </div>
+            <div class="movies-wrapper mb-30" id="main-wrapper">
+                <!-- <div class="movie-boxes">
                 <div class="box">
                     <div class="img">
                         <img src="images/movie.jpg" alt="moive">
@@ -102,15 +84,15 @@
                     </div>
                 </div>
             </div> -->
-        </div>
+            </div>
 
 
-        <!-- Top rated Movies -->
-        <div class="movie-category-heading">
-            <h3>Top Rated Movies</h3>
-        </div>
-        <div class="movies-wrapper mb-30" id="rated-wrapper">
-            <!-- <div class="movie-boxes">
+            <!-- Top rated Movies -->
+            <div class="movie-category-heading">
+                <h3>Top Rated Movies</h3>
+            </div>
+            <div class="movies-wrapper mb-30" id="rated-wrapper">
+                <!-- <div class="movie-boxes">
                 <div class="box">
                     <div class="img">
                         <img src="images/movie.jpg" alt="moive">
@@ -126,16 +108,16 @@
                 </div>
             </div> -->
 
-        </div>
+            </div>
 
 
-        <!-- Upcoming Movies Category  -->
-        <div class="movie-category-heading">
-            <h3>Upcoming Movies</h3>
-        </div>
-        <div class="movies-wrapper mb-30" id="upcoming-movies">
-            <div class="movie-boxes">
-                <!-- <div class="box">
+            <!-- Upcoming Movies Category  -->
+            <div class="movie-category-heading">
+                <h3>Upcoming Movies</h3>
+            </div>
+            <div class="movies-wrapper mb-30" id="upcoming-movies">
+                <div class="movie-boxes">
+                    <!-- <div class="box">
                     <div class="img">
                         <img src="images/movie.jpg" alt="moive">
                     </div>
@@ -148,9 +130,190 @@
                         </div>
                     </div>
                 </div> -->
+                </div>
+
             </div>
 
+
         </div>
+
+
+        <!-- When any movie is searched -->
+        <div class="movie-container disp-none" id="movies-container">
+            <div class="search-movie-container" id="search-movie-cont">
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" style="width: 200px; height: 220px;" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="img">
+                        <img src="images/movie.jpg" alt="moive">
+                    </div>
+                    <div class="movie-details">
+                        <div class="movie-name">
+                            <p>Spiderman</p>
+                        </div>
+                        <div class="release-rating">
+                            <div class="rating">
+                                <p><i class="fa-solid fa-star yellow"></i> 8.1</p>
+                            </div>
+                            <div class="release-year">
+                                <p>2012</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
 
     </div>
 

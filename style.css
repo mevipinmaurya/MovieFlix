@@ -46,6 +46,7 @@ nav {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    cursor: pointer;
 }
 
 .movie-icon {
@@ -222,6 +223,7 @@ img {
     padding: 10px;
     flex-direction: column;
     gap: 5px;
+    width: 200px;
 }
 
 .release-rating {
@@ -251,4 +253,19 @@ img {
 .yellow {
     color: rgb(212, 212, 0);
     font-size: 13px;
+}
+
+.search-movie-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+}
+.column{
+    flex: 15%;
+    margin: 0 5px;
+}
+
+.disp-none{
+    display: none;
 }
