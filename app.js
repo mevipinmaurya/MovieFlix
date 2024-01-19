@@ -292,6 +292,10 @@ form.addEventListener("submit", (e) => {
     if (searchTerm) {
         getSearchMovies(SEARCH_URL + "&query=" + searchTerm);
     }
+    else{
+        // getTrendingMovies(trending_url);
+        console.log("Empty")
+    }
 })
 
 const showSearchMovies = (data) => {
