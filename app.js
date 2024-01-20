@@ -56,7 +56,7 @@ getUpcomingMovies(upcoming_url);
 const showTrendingMovies = (data) => {
     trendingMovies.innerText = "";
     data.forEach(movie => {
-        const { title, poster_path, vote_average, release_date } = movie;
+        const { title, poster_path, vote_average, release_date, id } = movie;
         let newTitle = "";
         if (title.length >= 15) {
             let titleArr = title.split(" ");
@@ -69,7 +69,7 @@ const showTrendingMovies = (data) => {
         movieBoxes.classList.add("movie-boxes");
         movieBoxes.innerHTML = `
         
-                <div class="box">
+                <div class="box" onclick="movie_id(${id})">
                     <div class="img">
                         <img src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/200x230"}" alt="${title}">
                     </div>
@@ -94,10 +94,96 @@ const showTrendingMovies = (data) => {
 }
 
 
+const overlayContent = document.getElementById('overlay-content');
+/* Open when someone clicks on the span element */
+async function openNav(id) {
+    let response = await fetch(BASE_URL + `/movie/${id}/videos?` + API_KEY);
+    let data = await response.json();
+    // console.log(data);
+    if (data) {
+        document.getElementById("myNav").style.width = "100%";
+
+        if (data.results.length > 0) {
+            let embed = [];
+            data.results.forEach((video) => {
+                let { name, key, site } = video;
+                if (site == 'YouTube') {
+                    embed.push(`
+                    <iframe width="520" height="315" src="https://www.youtube.com/embed/${key}" title="${name}" class="embed hide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    `)
+                }
+            })
+            overlayContent.innerHTML = embed.join('');
+
+            activeSlide = 0;
+            showVideos();
+        }
+        else {
+            overlayContent.innerHTML = `<h1 style="color:white; text-align:center;"> No Results Found </h1>`;
+        }
+    }
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+}
+
+let activeSlide = 0;
+let totalVideos = 0;
+function showVideos(){
+    let embedClasses = document.querySelectorAll('.embed');
+    totalVideos = embedClasses.length;
+    embedClasses.forEach((embedTag, idx)=>{
+        if(activeSlide == idx){
+            embedTag.classList.add('show');
+            embedTag.classList.remove('hide');
+        }
+        else{
+            embedTag.classList.add('hide');
+            embedTag.classList.remove('show');
+        }
+    })
+}
+
+const leftArrow = document.getElementById('left-arrow');
+const rightArrow = document.getElementById('right-arrow');
+
+leftArrow.addEventListener('click', ()=>{
+    if(activeSlide > 0 ){
+        activeSlide--;
+    }
+    else{
+        activeSlide = totalVideos - 1;
+    }
+    showVideos();
+})
+
+rightArrow.addEventListener('click', ()=>{
+    if(activeSlide < totalVideos - 1 ){
+        activeSlide++;
+    }
+    else{
+        activeSlide = 0;
+    }
+    showVideos();
+})
+
+function movie_id(id) {
+    openNav(id);
+}
+
+
+const clickGenre = document.getElementById('genreScroll');
+clickGenre.addEventListener('click', () => {
+    closeNav();
+})
+
+
 const showPopularMovies = (data) => {
     main.innerText = "";
     data.forEach(movie => {
-        const { title, poster_path, vote_average, release_date } = movie;
+        const { title, poster_path, vote_average, release_date , id} = movie;
         let newTitle = "";
         if (title.length >= 15) {
             let titleArr = title.split(" ");
@@ -110,7 +196,7 @@ const showPopularMovies = (data) => {
         movieBoxes.classList.add("movie-boxes");
         movieBoxes.innerHTML = `
         
-                <div class="box">
+                <div class="box" onclick="movie_id(${id})">
                     <div class="img">
                         <img src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/200x230"}" alt="${title}">
                     </div>
@@ -138,7 +224,7 @@ const showPopularMovies = (data) => {
 const showRatedMovies = (data) => {
     ratedWrapper.innerText = "";
     data.forEach(movie => {
-        const { title, poster_path, vote_average, release_date } = movie;
+        const { title, poster_path, vote_average, release_date, id } = movie;
         let newTitle = "";
         if (title.length >= 15) {
             let titleArr = title.split(" ");
@@ -151,7 +237,7 @@ const showRatedMovies = (data) => {
         movieBoxes.classList.add("movie-boxes");
         movieBoxes.innerHTML = `
         
-                <div class="box">
+                <div class="box" onclick="movie_id(${id})">
                     <div class="img">
                         <img src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/200x230"}" alt="${title}">
                     </div>
@@ -178,7 +264,7 @@ const showRatedMovies = (data) => {
 const showUpcomingMovies = (data) => {
     upcomingMovies.innerText = "";
     data.forEach(movie => {
-        const { title, poster_path, vote_average, release_date } = movie;
+        const { title, poster_path, vote_average, release_date, id } = movie;
         let newTitle = "";
         if (title.length >= 15) {
             let titleArr = title.split(" ");
@@ -191,7 +277,7 @@ const showUpcomingMovies = (data) => {
         movieBoxes.classList.add("movie-boxes");
         movieBoxes.innerHTML = `
         
-                <div class="box">
+                <div class="box" onclick="movie_id(${id})">
                     <div class="img">
                         <img src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/200x230"}" alt="${title}">
                     </div>
@@ -286,15 +372,16 @@ const getSearchMovies = async (url) => {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    closeNav();
     // console.log(search.value);
     let searchTerm = search.value;
 
     if (searchTerm) {
         getSearchMovies(SEARCH_URL + "&query=" + searchTerm);
     }
-    else{
+    else {
         // getTrendingMovies(trending_url);
-        console.log("Empty")
+        window.location.href = 'index.html';
     }
 })
 
@@ -304,7 +391,7 @@ const showSearchMovies = (data) => {
     moviesContainer.classList.remove('disp-none');
     searchMovieCont.innerText = "";
     data.forEach(movie => {
-        const { title, poster_path, vote_average, release_date } = movie;
+        const { title, poster_path, vote_average, release_date, id } = movie;
         let newTitle = "";
         if (title.length >= 12) {
             let titleArr = title.split(" ");
@@ -316,7 +403,7 @@ const showSearchMovies = (data) => {
         const newEl = document.createElement('div');
         newEl.classList.add('box');
         newEl.innerHTML = `
-            
+            <div onclick="movie_id(${id})">
                 <div class="img">
                     <img src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/200x230"}" alt="${title}">
                 </div>
@@ -332,6 +419,7 @@ const showSearchMovies = (data) => {
                             <p>${release_date}</p>
                         </div>
                     </div>
+                </div>
                 </div>
         `
         searchMovieCont.appendChild(newEl);
@@ -365,7 +453,7 @@ const getGenreMovies = async (url) => {
         prevPage = currentPage - 1;
         nextPage = currentPage + 1;
         totalPages = data.total_pages;
-        
+
         current.innerText = currentPage;
         if (currentPage <= 1) {
             prev.classList.add('disabled');
@@ -398,7 +486,7 @@ const showGenreMovies = (data) => {
     genreMovieListInner.innerText = "";
     search.value = "";
     data.forEach(movie => {
-        const { title, poster_path, vote_average, release_date } = movie;
+        const { title, poster_path, vote_average, release_date, id } = movie;
         let newTitle = "";
         if (title.length >= 12) {
             let titleArr = title.split(" ");
@@ -410,7 +498,7 @@ const showGenreMovies = (data) => {
         const newEl = document.createElement('div');
         newEl.classList.add('box');
         newEl.innerHTML = `
-            
+            <div onclick="movie_id(${id})">
                 <div class="img">
                     <img src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/200x230"}" alt="${title}">
                 </div>
@@ -427,6 +515,7 @@ const showGenreMovies = (data) => {
                         </div>
                     </div>
                 </div>
+                </div>
         `
         genreMovieListInner.appendChild(newEl);
     });
@@ -439,11 +528,11 @@ prev.addEventListener("click", () => {
 })
 
 next.addEventListener("click", () => {
-    if(prevPage <= totalPages)
+    if (prevPage <= totalPages)
         pageCall(nextPage);
 })
 
-function pageCall(page){
+function pageCall(page) {
     let urlSplit = lastUrl.split('?');
     let queryParams = urlSplit[1].split('&');
     let key = queryParams[queryParams.length - 1].split('=');

@@ -28,7 +28,7 @@
     </nav>
 
     <div class="sidebar">
-        <div class="scrollbox">
+        <div class="scrollbox" id="genreScroll">
             <div class="scrollbox-inner" id="scrollbox-inner">
                 <!-- <div class="genre tag">Genre</div>
                 <div class="tag">Action</div> -->
@@ -37,6 +37,19 @@
     </div>
 
     <div class="container" id="main-container">
+
+        <!-- The overlay -->
+        <div id="myNav" class="overlay">
+
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+            <!-- Overlay content -->
+            <div class="overlay-content" id="overlay-content"></div>
+            <a href="javascript:void(0)" class="arrow left-arrow" id="left-arrow">&#10151;</a>
+            <a href="javascript:void(0)" class="arrow right-arrow" id="right-arrow">&#10151;</a>
+
+        </div>
 
         <div id="categories-movies" class="">
             <!----------------------------------------
